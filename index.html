@@ -4,56 +4,56 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Maanas Adiyodi</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #F0EEE9;
-      --blob-blue: #D0E1F9;
-      --blob-green: #D1EAD9;
-      --blob-pink: #FADCD9;
+      --blob-1: #D0E1F9;
+      --blob-2: #D1EAD9;
+      --blob-3: #FADCD9;
       --text-primary: #1d1d1f;
-      --text-secondary: #636366;
-      --glass-bg: rgba(255, 255, 255, 0.38);
-      --glass-border: 1px solid rgba(255, 255, 255, 0.65);
-      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-      --glass-blur: blur(40px);
-      --transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      --radius: 32px;
+      --text-secondary: #666;
+      --glass-bg: rgba(255, 255, 255, 0.28);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.55);
+      --glass-shadow: 0 12px 48px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255,255,255,0.25);
+      --glass-blur: blur(48px);
+      --transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      --radius: 28px;
     }
 
     body.dark-mode {
       --bg: #0f1115;
-      --blob-blue: #1b2a41;
-      --blob-green: #1f3a2e;
-      --blob-pink: #3a1f2b;
-      --text-primary: #f5f5f7;
-      --text-secondary: #a1a1a6;
-      --glass-bg: rgba(45, 45, 50, 0.52);
-      --glass-border: 1px solid rgba(255, 255, 255, 0.20);
-      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.50);
+      --blob-1: #1e293b;
+      --blob-2: #14532d;
+      --blob-3: #4c1d95;
+      --text-primary: #f0f0f5;
+      --text-secondary: #999;
+      --glass-bg: rgba(30, 30, 35, 0.5);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.15);
+      --glass-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
     }
 
-    body.solid-mode, body.dark-mode.solid-mode {
-      --glass-bg: rgba(255, 255, 255, 0.94);
-      --glass-border: 1px solid rgba(0, 0, 0, 0.14);
+    body.solid-mode {
+      --glass-bg: rgba(255, 255, 255, 0.98);
       --glass-blur: none;
     }
 
     body.dark-mode.solid-mode {
-      --glass-bg: rgba(30, 30, 34, 0.97);
-      --glass-border: 1px solid rgba(255, 255, 255, 0.11);
+      --glass-bg: rgba(24, 24, 28, 0.98);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
-      height: 100%;
       font-family: 'Montserrat', sans-serif;
       background: var(--bg);
       color: var(--text-primary);
-      transition: background 0.6s ease, color 0.6s ease;
+      transition: background 1s ease;
+      height: 100%;
+      overflow: hidden;
     }
 
+    /* Animated Blob Background */
     .background {
       position: fixed;
       inset: 0;
@@ -65,294 +65,237 @@
     .blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(100px);
-      opacity: 0.68;
-      animation: float 28s ease-in-out infinite alternate;
-      will-change: transform;
+      filter: blur(80px);
+      opacity: 0.5;
+      transition: background 1s ease;
     }
 
-    body.solid-mode .blob { opacity: 0.24; }
+    .b1 { width: 60vw; height: 60vw; background: var(--blob-1); top: -10%; left: -10%; animation: move 25s infinite alternate; }
+    .b2 { width: 50vw; height: 50vw; background: var(--blob-2); bottom: -10%; right: -10%; animation: move 30s infinite alternate-reverse; }
+    .b3 { width: 40vw; height: 40vw; background: var(--blob-3); top: 20%; right: 20%; animation: move 20s infinite linear; }
 
-    .blob.blue { width: min(90vmin, 800px); height: min(90vmin, 800px); background: var(--blob-blue); top: -25%; left: -25%; }
-    .blob.green { width: min(80vmin, 680px); height: min(80vmin, 680px); background: var(--blob-green); top: 50%; right: -20%; animation-delay: 9s; }
-    .blob.pink  { width: min(75vmin, 620px); height: min(75vmin, 620px); background: var(--blob-pink);  bottom: -22%; left: 18%; animation-delay: 17s; }
-
-    @keyframes float {
-      from { transform: translate(0, 0) rotate(0deg); }
-      to   { transform: translate(160px, 110px) rotate(100deg); }
+    @keyframes move {
+      from { transform: translate(0, 0) scale(1); }
+      to { transform: translate(15vw, 10vh) scale(1.1); }
     }
 
     main {
-      min-height: 100dvh;
+      height: 100dvh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: clamp(16px, 5vw, 32px);
+      padding: 20px;
       position: relative;
       z-index: 1;
     }
 
-    .content-stack {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: clamp(16px, 4vw, 24px);
-      width: 100%;
-      max-width: 920px;
-    }
-
     .card {
-      width: min(860px, 94vw);
-      padding: clamp(28px, 6vw, 52px);
+      width: 100%;
+      max-width: 500px;
+      padding: 40px 32px;
       border-radius: var(--radius);
       background: var(--glass-bg);
       backdrop-filter: var(--glass-blur);
       -webkit-backdrop-filter: var(--glass-blur);
       border: var(--glass-border);
       box-shadow: var(--glass-shadow);
-      display: flex;
-      flex-direction: column;
-      gap: clamp(24px, 4vw, 40px);
       text-align: center;
+      animation: cardEntry 1s ease-out;
     }
 
-    h1 { font-size: clamp(2.4rem, 7vw, 3.8rem); font-weight: 800; letter-spacing: -0.02em; }
-    .tagline { font-size: clamp(1.15rem, 3.5vw, 1.45rem); font-weight: 600; color: var(--text-secondary); margin: 0.4em 0 0.8em; }
-    .bio { font-size: clamp(1rem, 3vw, 1.15rem); line-height: 1.58; max-width: 68ch; margin: 0 auto; color: var(--text-secondary); }
+    @keyframes cardEntry {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
 
-    .socials {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.4rem;
-      font-size: clamp(1rem, 3vw, 1.18rem);
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+      background: linear-gradient(90deg, var(--text-primary), var(--text-secondary), var(--text-primary));
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shimmer 5s linear infinite;
+    }
+
+    @keyframes shimmer {
+      to { background-position: 200% center; }
+    }
+
+    .tagline {
+      font-size: 0.85rem;
       font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
     }
 
-    .socials a {
+    .bio {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .social-links a {
       color: var(--text-primary);
       text-decoration: none;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: letter-spacing 0.3s ease, opacity 0.3s ease;
     }
 
-    .socials a:hover, .socials a:focus { transform: translateY(-2px); opacity: 0.85; }
+    .social-links a:hover {
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+    }
 
     .email-pill {
-      padding: 14px 28px;
-      font-size: clamp(1rem, 3.2vw, 1.15rem);
-      font-weight: 600;
-      background: var(--glass-bg);
-      backdrop-filter: var(--glass-blur);
-      -webkit-backdrop-filter: var(--glass-blur);
-      border: var(--glass-border);
+      margin-top: 32px;
+      padding: 12px 32px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: var(--text-primary);
+      color: var(--bg);
       border-radius: 999px;
-      box-shadow: var(--glass-shadow);
-      color: var(--text-primary);
       text-decoration: none;
-      transition: all 0.3s ease;
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .email-pill:hover { transform: scale(1.04) translateY(-1px); }
+    .email-pill:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
 
-    /* ── ULTRA-COMPACT TOGGLES ── */
     .toggle {
       position: fixed;
-      top: 12px;
+      top: 14px;
+      width: 42px;
       height: 42px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      border-radius: 999px;
+      justify-content: flex-start;
+      border-radius: 21px;
       background: var(--glass-bg);
       backdrop-filter: var(--glass-blur);
       -webkit-backdrop-filter: var(--glass-blur);
       border: var(--glass-border);
       box-shadow: var(--glass-shadow);
-      transition: all var(--transition);
-      overflow: hidden;
       cursor: pointer;
       z-index: 100;
-      color: var(--text-primary);
-      user-select: none;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    /* Fixed widths to prevent text wrapping/clipping */
+    #theme-toggle.expanded { width: 115px; }
+    #glass-toggle.expanded { width: 175px; }
+    
+    .toggle-icon { 
+      min-width: 42px; 
+      height: 42px;
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-size: 18px;
+    }
+    
+    .toggle-text {
+      flex: 1;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.2s;
+      padding-right: 18px;
       white-space: nowrap;
     }
 
-    .toggle:hover,
-    .toggle:active {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.18);
-    }
+    .toggle.expanded .toggle-text { opacity: 1; }
 
-    .toggle-icon {
-      font-size: 20px;
-      line-height: 1;
-      flex-shrink: 0;
-    }
+    #theme-toggle { left: 14px; }
+    #glass-toggle { right: 14px; }
 
-    .toggle-text {
-      opacity: 0;
-      width: 0;
-      margin-left: 0;
-      transition: opacity 0.32s ease, width 0.4s ease, margin-left 0.4s ease;
-    }
-
-    #theme-toggle {
-      left: 12px;
-      width: 42px;
-      padding: 0;
-    }
-
-    #theme-toggle:hover,
-    #theme-toggle:active {
-      width: 130px;
-      justify-content: flex-start;
-      padding: 0 12px;
-    }
-
-    #theme-toggle:hover .toggle-text,
-    #theme-toggle:active .toggle-text {
-      opacity: 1;
-      width: auto;
-      margin-left: 10px;
-    }
-
-    #glass-toggle {
-      right: 12px;
-      width: 46px;
-      padding: 0 8px;
-    }
-
-    #glass-toggle:hover,
-    #glass-toggle:active {
-      width: 140px;
-      justify-content: flex-start;
-      padding: 0 12px;
-    }
-
-    #glass-toggle:hover .toggle-text,
-    #glass-toggle:active .toggle-text {
-      opacity: 1;
-      width: auto;
-      margin-left: 10px;
-    }
-
-    .switch {
-      width: 42px;
-      height: 24px;
-      border-radius: 999px;
-      background: #34c759;
-      position: relative;
-      flex-shrink: 0;
-      transition: background 0.3s ease;
-    }
-
-    .switch.off { background: #a0a0a8; }
-
-    .thumb {
-      width: 20px;
-      height: 20px;
-      background: white;
-      border-radius: 50%;
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.25);
-      transition: left 0.36s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .switch:not(.off) .thumb { left: calc(100% - 22px); }
-
-    /* Mobile adjustments */
-    @media (max-width: 640px) {
-      main { padding: 16px 20px; align-items: flex-start; padding-top: 80px; }
-
-      .card { width: 100%; padding: 32px 24px; }
-
-      .toggle {
-        top: 10px;
-        height: 38px;
-      }
-
-      #theme-toggle { width: 38px !important; }
-      #theme-toggle:hover, #theme-toggle:active { width: 120px !important; }
-
-      #glass-toggle { width: 42px !important; padding: 0 7px; }
-      #glass-toggle:hover, #glass-toggle:active { width: 130px !important; }
-
-      .blob { filter: blur(80px); opacity: 0.58; }
-      body.solid-mode .blob { opacity: 0.18; }
-
-      .socials { flex-direction: column; gap: 1.2rem; }
-    }
-
-    @media (max-width: 380px) {
-      h1 { font-size: 2.1rem; }
-      .tagline { font-size: 1.05rem; }
-      .bio { font-size: 0.98rem; }
+    @media (max-width: 480px) {
+      .social-links { flex-direction: column; gap: 10px; }
     }
   </style>
 </head>
 <body>
   <div class="background">
-    <div class="blob blue"></div>
-    <div class="blob green"></div>
-    <div class="blob pink"></div>
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
   </div>
 
   <main>
-    <div class="content-stack">
-      <section class="card">
-        <div class="profile">
-          <h1>Maanas Adiyodi</h1>
-          <div class="tagline">Graphic Designer | Content Creator</div>
-          <p class="bio">
-            I'm a graphic designer helping content creators stand out. Professional designer with 2 years of experience making unique designs for car enthusiasts.
-          </p>
-        </div>
-        <div class="socials">
-          <a href="https://instagram.com/adichitodi" target="_blank" rel="noopener noreferrer">@adichitodi</a>
-          <a href="https://instagram.com/des1gn.anythin" target="_blank" rel="noopener noreferrer">@des1gn.anythin</a>
-          <a href="https://instagram.com/cars.gfx" target="_blank" rel="noopener noreferrer">@cars.gfx</a>
-        </div>
-      </section>
+    <section class="card">
+      <h1>Maanas Adiyodi</h1>
+      <div class="tagline">Graphic Designer</div>
+      
+      <p class="bio">
+        Helping creators stand out through specialized visual design for the automotive industry.
+      </p>
+      
+      <div class="social-links">
+        <a href="https://www.instagram.com/adichitodi" target="_blank">@adichitodi</a>
+        <a href="https://www.instagram.com/des1gn.anythin" target="_blank">@des1gn.anythin</a>
+        <a href="https://www.instagram.com/cars.gfx" target="_blank">@cars.gfx</a>
+      </div>
 
       <a href="mailto:maanas.rsuresh@gmail.com" class="email-pill">
-        maanas.rsuresh@gmail.com
+        Contact Me
       </a>
-    </div>
+    </section>
   </main>
 
-  <!-- Compact Toggles -->
   <div id="theme-toggle" class="toggle">
     <span id="themeEmoji" class="toggle-icon">☀️</span>
-    <span id="themeText" class="toggle-text">Light</span>
+    <span id="themeLabel" class="toggle-text">Light</span>
   </div>
 
   <div id="glass-toggle" class="toggle">
-    <div class="switch" id="glassSwitch"><div class="thumb"></div></div>
-    <span id="glassText" class="toggle-text">Liquid</span>
+    <span id="glassIcon" class="toggle-icon">✨</span>
+    <span id="glassLabel" class="toggle-text">Liquid Glass</span>
   </div>
 
   <script>
     const body = document.body;
     const themeToggle = document.getElementById('theme-toggle');
     const themeEmoji = document.getElementById('themeEmoji');
-    const themeText = document.getElementById('themeText');
+    const themeLabel = document.getElementById('themeLabel');
     const glassToggle = document.getElementById('glass-toggle');
-    const glassSwitch = document.getElementById('glassSwitch');
-    const glassText = document.getElementById('glassText');
+    const glassIcon = document.getElementById('glassIcon');
+    const glassLabel = document.getElementById('glassLabel');
 
-    // Theme
-    let isDark = localStorage.getItem('theme') === 'dark';
-    if (localStorage.getItem('theme') === null) {
-      isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    let themeTimer, glassTimer;
+
+    function expandToggle(el, timer) {
+      clearTimeout(timer);
+      el.classList.add('expanded');
+      return setTimeout(() => el.classList.remove('expanded'), 2000);
     }
 
+    let isDark = localStorage.getItem('theme') === 'dark';
     function applyTheme(dark) {
       body.classList.toggle('dark-mode', dark);
       themeEmoji.textContent = dark ? '🌙' : '☀️';
-      themeText.textContent = dark ? 'Dark' : 'Light';
+      themeLabel.textContent = dark ? 'Dark' : 'Light';
     }
     applyTheme(isDark);
 
@@ -360,26 +303,29 @@
       isDark = !isDark;
       applyTheme(isDark);
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      themeTimer = expandToggle(themeToggle, themeTimer);
     });
 
-    // Glass / Solid
-    let isSolid = localStorage.getItem('glass') === 'solid';
-    if (localStorage.getItem('glass') === null) {
-      isSolid = false;
-      localStorage.setItem('glass', 'liquid');
-    }
+    themeToggle.addEventListener('mouseenter', () => themeToggle.classList.add('expanded'));
+    themeToggle.addEventListener('mouseleave', () => themeToggle.classList.remove('expanded'));
 
-    body.classList.toggle('solid-mode', isSolid);
-    glassSwitch.classList.toggle('off', isSolid);
-    glassText.textContent = isSolid ? 'Solid' : 'Liquid';
+    let isSolid = localStorage.getItem('glass') === 'solid';
+    function applyGlass(solid) {
+      body.classList.toggle('solid-mode', solid);
+      glassIcon.style.opacity = solid ? '0.4' : '1';
+      glassLabel.textContent = solid ? 'Solid' : 'Liquid Glass';
+    }
+    applyGlass(isSolid);
 
     glassToggle.addEventListener('click', () => {
       isSolid = !isSolid;
-      body.classList.toggle('solid-mode', isSolid);
-      glassSwitch.classList.toggle('off', isSolid);
-      glassText.textContent = isSolid ? 'Solid' : 'Liquid';
+      applyGlass(isSolid);
       localStorage.setItem('glass', isSolid ? 'solid' : 'liquid');
+      glassTimer = expandToggle(glassToggle, glassTimer);
     });
+
+    glassToggle.addEventListener('mouseenter', () => glassToggle.classList.add('expanded'));
+    glassToggle.addEventListener('mouseleave', () => glassToggle.classList.remove('expanded'));
   </script>
 </body>
 </html>
