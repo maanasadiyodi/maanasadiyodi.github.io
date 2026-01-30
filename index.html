@@ -3,107 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Maanas Adiyodi — Portfolio</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
-
+  <title>Maanas Adiyodi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #F0EEE9;
-
       --blob-blue: #D0E1F9;
       --blob-green: #D1EAD9;
       --blob-pink: #FADCD9;
-
       --text-primary: #1d1d1f;
       --text-secondary: #636366;
-
-      --glass-bg: rgba(255, 255, 255, 0.25);
-      --glass-border: 1px solid rgba(255, 255, 255, 0.5);
-      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      --glass-bg: rgba(255, 255, 255, 0.38);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.65);
+      --glass-shadow: 0 12px 48px rgba(0, 0, 0, 0.14);
       --glass-blur: blur(40px);
-
-      --transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-      --spring: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1.2);
+      --transition: 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+      --radius: 32px;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    body.dark-mode {
+      --bg: #0f1115;
+      --blob-blue: #1b2a41;
+      --blob-green: #1f3a2e;
+      --blob-pink: #3a1f2b;
+      --text-primary: #f5f5f7;
+      --text-secondary: #a1a1a6;
+      --glass-bg: rgba(45, 45, 50, 0.52);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.20);
+      --glass-shadow: 0 12px 48px rgba(0, 0, 0, 0.55);
     }
+
+    body.solid-mode, body.dark-mode.solid-mode {
+      --glass-bg: rgba(255, 255, 255, 0.94);
+      --glass-border: 1px solid rgba(0, 0, 0, 0.14);
+      --glass-blur: none;
+    }
+
+    body.dark-mode.solid-mode {
+      --glass-bg: rgba(30, 30, 34, 0.97);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.11);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
       height: 100%;
       font-family: 'Montserrat', sans-serif;
       background: var(--bg);
       color: var(--text-primary);
+      transition: background 0.6s ease, color 0.6s ease;
     }
 
-    body.solid-mode {
-      --glass-bg: rgba(255, 255, 255, 0.95);
-      --glass-border: 1px solid rgba(0, 0, 0, 0.1);
-      --glass-blur: none;
-    }
-
-    /* BACKGROUND BLOBS */
     .background {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
+      overflow: hidden;
     }
 
     .blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.6;
-      animation: float 22s ease-in-out infinite alternate;
+      filter: blur(100px);
+      opacity: 0.68;
+      animation: float 28s ease-in-out infinite alternate;
+      will-change: transform;
     }
 
-    body.solid-mode .blob {
-      opacity: 0.2;
-    }
+    body.solid-mode .blob { opacity: 0.24; }
 
-    .blob.blue {
-      width: 600px;
-      height: 600px;
-      background: var(--blob-blue);
-      top: -10%;
-      left: -10%;
-    }
-
-    .blob.green {
-      width: 500px;
-      height: 500px;
-      background: var(--blob-green);
-      top: 40%;
-      right: -5%;
-      animation-delay: 6s;
-    }
-
-    .blob.pink {
-      width: 450px;
-      height: 450px;
-      background: var(--blob-pink);
-      bottom: -10%;
-      left: 30%;
-      animation-delay: 12s;
-    }
+    .blob.blue { width: min(90vmin, 800px); height: min(90vmin, 800px); background: var(--blob-blue); top: -25%; left: -25%; }
+    .blob.green { width: min(80vmin, 680px); height: min(80vmin, 680px); background: var(--blob-green); top: 50%; right: -20%; animation-delay: 9s; }
+    .blob.pink  { width: min(75vmin, 620px); height: min(75vmin, 620px); background: var(--blob-pink);  bottom: -22%; left: 18%; animation-delay: 17s; }
 
     @keyframes float {
-      from { transform: translate(0,0) rotate(0deg); }
-      to { transform: translate(100px,60px) rotate(90deg); }
+      from { transform: translate(0, 0) rotate(0deg); }
+      to   { transform: translate(160px, 110px) rotate(100deg); }
     }
 
-    /* LAYOUT */
     main {
-      min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: clamp(16px, 5vw, 32px);
       position: relative;
       z-index: 1;
     }
@@ -112,173 +96,207 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 16px;
+      gap: clamp(16px, 4vw, 24px);
+      width: 100%;
+      max-width: 920px;
     }
 
     .card {
-      width: min(860px, 92vw);
-      padding: clamp(28px, 4vw, 44px);
-      border-radius: 28px;
+      width: min(860px, 94vw);
+      padding: clamp(28px, 6vw, 52px);
+      border-radius: var(--radius);
       background: var(--glass-bg);
       backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
       border: var(--glass-border);
       box-shadow: var(--glass-shadow);
       display: flex;
       flex-direction: column;
-      gap: 28px;
-      animation: scaleIn 0.8s var(--spring);
-    }
-
-    @keyframes scaleIn {
-      from { transform: scale(0.95); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    /* PROFILE */
-    .profile {
+      gap: clamp(24px, 4vw, 40px);
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
     }
 
-    .profile h1 {
-      font-size: clamp(36px, 5vw, 60px);
-      font-weight: 800;
-      letter-spacing: -1.5px;
-    }
+    h1 { font-size: clamp(2.4rem, 7vw, 3.8rem); font-weight: 800; letter-spacing: -0.02em; }
+    .tagline { font-size: clamp(1.15rem, 3.5vw, 1.45rem); font-weight: 600; color: var(--text-secondary); margin: 0.4em 0 0.8em; }
+    .bio { font-size: clamp(1rem, 3vw, 1.15rem); line-height: 1.58; max-width: 68ch; margin: 0 auto; color: var(--text-secondary); }
 
-    .tagline {
-      font-size: clamp(16px, 2.4vw, 22px);
-      color: var(--text-secondary);
-    }
-
-    .bio {
-      max-width: 500px;
-      margin: 8px auto 0;
-      font-size: 15px;
-      line-height: 1.6;
-      color: var(--text-secondary);
-    }
-
-    /* SOCIALS */
     .socials {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      border: 1px solid rgba(255,255,255,0.5);
-      border-radius: 14px;
-      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.4rem;
+      font-size: clamp(1rem, 3vw, 1.18rem);
+      font-weight: 600;
     }
 
     .socials a {
-      padding: 16px;
-      text-align: center;
-      font-size: 13px;
-      font-weight: 700;
-      text-decoration: none;
       color: var(--text-primary);
-      background: rgba(255,255,255,0.4);
-      transition: var(--transition);
+      text-decoration: none;
+      transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
-    .socials a:hover {
-      background: rgba(255,255,255,0.7);
-      transform: scale(1.03);
-    }
+    .socials a:hover, .socials a:focus { transform: translateY(-2px); opacity: 0.85; }
 
-    /* EMAIL BELOW CARD */
     .email-pill {
-      padding: 10px 16px;
-      font-size: 13px;
+      padding: 14px 28px;
+      font-size: clamp(1rem, 3.2vw, 1.15rem);
       font-weight: 600;
-      border-radius: 12px;
       background: var(--glass-bg);
       backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
       border: var(--glass-border);
+      border-radius: 999px;
       box-shadow: var(--glass-shadow);
-      color: var(--text-secondary);
-      white-space: nowrap;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: all 0.3s ease;
     }
 
-    /* TOGGLE */
-    .toggle-wrapper {
+    .email-pill:hover { transform: scale(1.04) translateY(-1px); }
+
+    /* ── TOGGLES ── */
+    .toggle {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 60px;
-      height: 44px;
-      padding: 8px;
+      top: 16px;
+      height: 54px;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
       gap: 12px;
+      padding: 0 14px;
       border-radius: 999px;
       background: var(--glass-bg);
       backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
       border: var(--glass-border);
       box-shadow: var(--glass-shadow);
+      transition: all var(--transition);
       overflow: hidden;
-      transition: var(--transition);
-      z-index: 10;
+      cursor: pointer;
+      z-index: 100;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      user-select: none;
+      white-space: nowrap;
     }
 
-    .toggle-wrapper:hover {
-      width: 260px;
+    .toggle:hover,
+    .toggle:active {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 56px rgba(0,0,0,0.18);
+    }
+
+    .toggle-icon {
+      font-size: 22px;
+      line-height: 1;
+      flex-shrink: 0;
+      min-width: 24px;
+      text-align: center;
     }
 
     .toggle-text {
-      font-size: 12px;
-      font-weight: 700;
-      white-space: nowrap;
       opacity: 0;
-      transition: var(--transition);
+      width: 0;
+      transition: opacity 0.35s ease, width 0.42s ease;
     }
 
-    .toggle-wrapper:hover .toggle-text {
+    #theme-toggle {
+      left: 16px;
+      width: 54px;
+      justify-content: center;
+      padding: 0;
+    }
+
+    #theme-toggle:hover,
+    #theme-toggle:active {
+      width: 140px;
+      justify-content: flex-start;
+      padding: 0 14px;
+    }
+
+    #theme-toggle:hover .toggle-text,
+    #theme-toggle:active .toggle-text {
       opacity: 1;
+      width: auto;
+    }
+
+    #glass-toggle {
+      right: 16px;
+      width: 62px;           /* slightly wider to comfortably fit switch */
+      justify-content: center;
+      padding: 0 12px;
+    }
+
+    #glass-toggle:hover,
+    #glass-toggle:active {
+      width: 150px;
+      justify-content: flex-start;
+      padding: 0 14px;
+    }
+
+    #glass-toggle:hover .toggle-text,
+    #glass-toggle:active .toggle-text {
+      opacity: 1;
+      width: auto;
     }
 
     .switch {
-      width: 44px;
+      width: 48px;
       height: 28px;
       border-radius: 999px;
       background: #34c759;
       position: relative;
-      cursor: pointer;
       flex-shrink: 0;
+      transition: background 0.3s ease;
     }
 
-    .switch.off {
-      background: #e9e9eb;
-    }
+    .switch.off { background: #a0a0a8; }
 
     .thumb {
       width: 24px;
       height: 24px;
-      background: #fff;
+      background: white;
       border-radius: 50%;
       position: absolute;
       top: 2px;
-      left: 18px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      transition: var(--spring);
-    }
-
-    .switch.off .thumb {
       left: 2px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.28);
+      transition: left 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    @media (max-width: 768px) {
-      .toggle-wrapper {
-        width: 60px !important;
+    .switch:not(.off) .thumb { left: calc(100% - 26px); }
+
+    /* Mobile adjustments */
+    @media (max-width: 640px) {
+      main { padding: 16px 20px; align-items: flex-start; padding-top: 100px; }
+
+      .card { width: 100%; padding: 32px 24px; }
+
+      .toggle {
+        top: 12px;
+        height: 48px;
+        font-size: 14px;
       }
-      .toggle-text {
-        display: none;
-      }
+
+      #theme-toggle { width: 48px !important; }
+      #theme-toggle:hover, #theme-toggle:active { width: 130px !important; }
+
+      #glass-toggle { width: 56px !important; padding: 0 10px; }
+      #glass-toggle:hover, #glass-toggle:active { width: 140px !important; }
+
+      .blob { filter: blur(80px); opacity: 0.58; }
+      body.solid-mode .blob { opacity: 0.18; }
+
+      .socials { flex-direction: column; gap: 1.2rem; }
+    }
+
+    @media (max-width: 380px) {
+      h1 { font-size: 2.1rem; }
+      .tagline { font-size: 1.05rem; }
+      .bio { font-size: 0.98rem; }
     }
   </style>
 </head>
-
 <body>
   <div class="background">
     <div class="blob blue"></div>
@@ -293,34 +311,79 @@
           <h1>Maanas Adiyodi</h1>
           <div class="tagline">Graphic Designer | Content Creator</div>
           <p class="bio">
-            I'm a graphic designer helping content creators stand out.
-            Professional designer with 2 years of experience making unique designs for car enthusiasts.
+            I'm a graphic designer helping content creators stand out. Professional designer with 2 years of experience making unique designs for car enthusiasts.
           </p>
         </div>
-
         <div class="socials">
-          <a href="https://instagram.com/adichitodi" target="_blank">@adichitodi</a>
-          <a href="https://instagram.com/des1gn.anythin" target="_blank">@des1gn.anythin</a>
-          <a href="https://instagram.com/cars.gfx" target="_blank">@cars.gfx</a>
+          <a href="https://instagram.com/adichitodi" target="_blank" rel="noopener noreferrer">@adichitodi</a>
+          <a href="https://instagram.com/des1gn.anythin" target="_blank" rel="noopener noreferrer">@des1gn.anythin</a>
+          <a href="https://instagram.com/cars.gfx" target="_blank" rel="noopener noreferrer">@cars.gfx</a>
         </div>
       </section>
 
-      <div class="email-pill">maanas.rsuresh@gmail.com</div>
+      <a href="mailto:maanas.rsuresh@gmail.com" class="email-pill">
+        maanas.rsuresh@gmail.com
+      </a>
     </div>
   </main>
 
-  <div class="toggle-wrapper">
-    <div class="switch" id="glassToggle">
-      <div class="thumb"></div>
-    </div>
-    <div class="toggle-text">LIQUID GLASS EFFECT</div>
+  <!-- Toggles -->
+  <div id="theme-toggle" class="toggle">
+    <span id="themeEmoji" class="toggle-icon">☀️</span>
+    <span id="themeText" class="toggle-text">Light</span>
+  </div>
+
+  <div id="glass-toggle" class="toggle">
+    <div class="switch" id="glassSwitch"><div class="thumb"></div></div>
+    <span id="glassText" class="toggle-text">Liquid</span>
   </div>
 
   <script>
-    const toggle = document.getElementById('glassToggle');
-    toggle.addEventListener('click', () => {
-      toggle.classList.toggle('off');
-      document.body.classList.toggle('solid-mode');
+    const body = document.body;
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeEmoji = document.getElementById('themeEmoji');
+    const themeText = document.getElementById('themeText');
+    const glassToggle = document.getElementById('glass-toggle');
+    const glassSwitch = document.getElementById('glassSwitch');
+    const glassText = document.getElementById('glassText');
+
+    // Theme
+    let isDark = localStorage.getItem('theme') === 'dark';
+    if (localStorage.getItem('theme') === null) {
+      isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+
+    function applyTheme(dark) {
+      body.classList.toggle('dark-mode', dark);
+      themeEmoji.textContent = dark ? '🌙' : '☀️';
+      themeText.textContent = dark ? 'Dark' : 'Light';
+    }
+    applyTheme(isDark);
+
+    themeToggle.addEventListener('click', () => {
+      isDark = !isDark;
+      applyTheme(isDark);
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+
+    // Glass / Solid
+    let isSolid = localStorage.getItem('glass') === 'solid';
+    if (localStorage.getItem('glass') === null) {
+      isSolid = false;
+      localStorage.setItem('glass', 'liquid');
+    }
+
+    body.classList.toggle('solid-mode', isSolid);
+    glassSwitch.classList.toggle('off', isSolid);
+    glassText.textContent = isSolid ? 'Solid' : 'Liquid';
+
+    glassToggle.addEventListener('click', () => {
+      isSolid = !isSolid;
+      body.classList.toggle('solid-mode', isSolid);
+      glassSwitch.classList.toggle('off', isSolid);
+      glassText.textContent = isSolid ? 'Solid' : 'Liquid';
+      localStorage.setItem('glass', isSolid ? 'solid' : 'liquid');
     });
   </script>
 </body>
